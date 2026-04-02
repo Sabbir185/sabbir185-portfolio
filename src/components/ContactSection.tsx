@@ -1,8 +1,11 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
+import { contactData } from '@/data';
 
 export default function ContactSection() {
+  const { sectionLabel, sectionTitle, sectionSubtitle, infoHeading, infoDescription, methods } = contactData;
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -21,54 +24,33 @@ export default function ContactSection() {
     <section className="section contact" id="contact">
       <div className="container">
         <div className="section-header">
-          <span className="section-label">Let&apos;s Connect</span>
-          <h2 className="section-title">Get In Touch</h2>
-          <p className="section-subtitle">
-            Have a project in mind or want to discuss opportunities? I&apos;d love to hear from you
-          </p>
+          <span className="section-label">{sectionLabel}</span>
+          <h2 className="section-title">{sectionTitle}</h2>
+          <p className="section-subtitle">{sectionSubtitle}</p>
         </div>
 
         <div className="contact-content">
           {/* Contact Info */}
           <div className="contact-info">
-            <h3>Let&apos;s build something amazing together</h3>
-            <p>
-              I&apos;m always open to discussing new projects, creative ideas, or opportunities
-              to be part of your vision. Feel free to reach out!
-            </p>
+            <h3>{infoHeading}</h3>
+            <p>{infoDescription}</p>
 
             <div className="contact-methods">
-              <a href="mailto:sabbir.py@gmail.com" className="contact-method" id="contact-email">
-                <div className="contact-method-icon">📧</div>
-                <div>
-                  <div className="contact-method-label">Email</div>
-                  <div className="contact-method-value">sabbir.py@gmail.com</div>
-                </div>
-              </a>
-
-              <a href="tel:+8801725151578" className="contact-method" id="contact-phone">
-                <div className="contact-method-icon">📱</div>
-                <div>
-                  <div className="contact-method-label">Phone</div>
-                  <div className="contact-method-value">+880 1725 151578</div>
-                </div>
-              </a>
-
-              <a href="https://github.com/sabbir185" target="_blank" rel="noopener noreferrer" className="contact-method" id="contact-github">
-                <div className="contact-method-icon">💻</div>
-                <div>
-                  <div className="contact-method-label">GitHub</div>
-                  <div className="contact-method-value">github.com/sabbir185</div>
-                </div>
-              </a>
-
-              <a href="https://linkedin.com/in/sabbir185" target="_blank" rel="noopener noreferrer" className="contact-method" id="contact-linkedin">
-                <div className="contact-method-icon">🔗</div>
-                <div>
-                  <div className="contact-method-label">LinkedIn</div>
-                  <div className="contact-method-value">linkedin.com/in/sabbir185</div>
-                </div>
-              </a>
+              {methods.map((method) => (
+                <a
+                  key={method.id}
+                  href={method.href}
+                  className="contact-method"
+                  id={method.id}
+                  {...(method.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                >
+                  <div className="contact-method-icon">{method.icon}</div>
+                  <div>
+                    <div className="contact-method-label">{method.label}</div>
+                    <div className="contact-method-value">{method.value}</div>
+                  </div>
+                </a>
+              ))}
             </div>
           </div>
 

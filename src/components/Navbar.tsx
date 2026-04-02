@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { navigationData } from '@/data';
 
 export default function Navbar() {
+  const { logo, logoAccent, links, authLinks } = navigationData;
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -30,18 +32,24 @@ export default function Navbar() {
       <nav className={`navbar ${scrolled ? 'scrolled' : ''}`} id="navbar">
         <div className="navbar-inner">
           <Link href="/" className="navbar-logo">
-            Sabbir<span>.dev</span>
+            {logo}<span>{logoAccent}</span>
           </Link>
 
           <ul className="navbar-links">
-            <li><a href="#about">About Me</a></li>
-            <li><Link href="/projects">Projects</Link></li>
-            <li><Link href="/blogs">Blogs</Link></li>
+            {links.map((link) => (
+              <li key={link.href}>
+                {link.isRoute ? (
+                  <Link href={link.href}>{link.label}</Link>
+                ) : (
+                  <a href={link.href}>{link.label}</a>
+                )}
+              </li>
+            ))}
           </ul>
 
           <div className="navbar-auth">
-            <Link href="/login" className="navbar-login">Log in</Link>
-            <Link href="/signup" className="btn btn-primary navbar-signup">Sign up</Link>
+            <Link href={authLinks.login.href} className="navbar-login">{authLinks.login.label}</Link>
+            <Link href={authLinks.signup.href} className="btn btn-primary navbar-signup">{authLinks.signup.label}</Link>
           </div>
 
           <button
@@ -58,11 +66,15 @@ export default function Navbar() {
       </nav>
 
       <div className={`mobile-menu ${mobileOpen ? 'open' : ''}`} id="mobile-menu">
-        <a href="#about" onClick={closeMobile}>About Me</a>
-        <Link href="/projects" onClick={closeMobile}>Projects</Link>
-        <Link href="/blogs" onClick={closeMobile}>Blogs</Link>
-        <Link href="/login" onClick={closeMobile}>Log in</Link>
-        <Link href="/signup" onClick={closeMobile} className="btn btn-primary">Sign up</Link>
+        {links.map((link) =>
+          link.isRoute ? (
+            <Link key={link.href} href={link.href} onClick={closeMobile}>{link.label}</Link>
+          ) : (
+            <a key={link.href} href={link.href} onClick={closeMobile}>{link.label}</a>
+          )
+        )}
+        <Link href={authLinks.login.href} onClick={closeMobile}>{authLinks.login.label}</Link>
+        <Link href={authLinks.signup.href} onClick={closeMobile} className="btn btn-primary">{authLinks.signup.label}</Link>
       </div>
     </>
   );

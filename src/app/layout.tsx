@@ -1,25 +1,15 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { siteConfig } from "@/data";
 
 export const metadata: Metadata = {
-  title: "Sabbir Ahmmed | Software Engineer Portfolio",
-  description:
-    "Md. Sabbir Ahmmed — Software Engineer specializing in React.js, Next.js, Node.js, Golang, and Cloud Computing. Explore my projects, blog posts, and get in touch.",
-  keywords: [
-    "Sabbir Ahmmed",
-    "Software Engineer",
-    "Full Stack Developer",
-    "React",
-    "Next.js",
-    "Node.js",
-    "Golang",
-    "Portfolio",
-  ],
-  authors: [{ name: "Md. Sabbir Ahmmed" }],
+  title: siteConfig.title,
+  description: siteConfig.description,
+  keywords: siteConfig.keywords,
+  authors: [{ name: siteConfig.author }],
   openGraph: {
-    title: "Sabbir Ahmmed | Software Engineer Portfolio",
-    description:
-      "Full-stack software engineer building scalable web applications with modern technologies.",
+    title: siteConfig.ogTitle,
+    description: siteConfig.ogDescription,
     type: "website",
   },
 };

@@ -1,8 +1,10 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
+import { subscriptionData } from '@/data';
 
 export default function SubscriptionSection() {
+  const { icon, title, description, placeholder, buttonText, successMessage } = subscriptionData;
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
@@ -21,12 +23,9 @@ export default function SubscriptionSection() {
 
       <div className="container">
         <div className="subscription-inner">
-          <div className="subscription-icon">✉️</div>
-          <h3>Stay in the Loop</h3>
-          <p>
-            Subscribe to my newsletter for the latest blog posts, project updates,
-            and tech insights delivered straight to your inbox.
-          </p>
+          <div className="subscription-icon">{icon}</div>
+          <h3>{title}</h3>
+          <p>{description}</p>
 
           {subscribed ? (
             <div style={{
@@ -42,21 +41,21 @@ export default function SubscriptionSection() {
               gap: '8px',
             }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              Successfully subscribed! Welcome aboard 🎉
+              {successMessage}
             </div>
           ) : (
             <form className="subscription-form" onSubmit={handleSubscribe} id="subscription-form">
               <input
                 type="email"
                 className="subscription-input"
-                placeholder="Enter your email address"
+                placeholder={placeholder}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 id="subscription-email"
               />
               <button type="submit" className="btn btn-primary subscription-btn" id="subscription-submit">
-                Subscribe
+                {buttonText}
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
               </button>
             </form>
